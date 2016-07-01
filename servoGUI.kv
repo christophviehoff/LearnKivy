@@ -1,0 +1,115 @@
+#:kivy 1.9
+
+ServoControlScreen:
+    name:'ServoControl'
+    #:set red 1,0,0,1
+    #:set green 0,1,0,1
+    #:set blue 0,0,1,1
+    #:set orange 255,165,0,1
+
+<ServoControlScreen>:
+
+    orientation: 'vertical'
+    spacing: 60
+    padding: root.width * 0.01, root.height *0.01
+
+    #py to kv object mapping
+    slider1: slider1
+    slider2: slider2
+    sw_enable: sw_enable
+    pb1_eject: pb1_eject
+    pb2_eject: pb2_eject
+    pb1_reset: pb1_reset
+    pb2_reset: pb2_reset
+    message:message
+
+    canvas:
+        Rectangle:
+            source: './images/background8.jpg'
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        size_hint_y: None
+        Switch:
+            id: sw_enable
+            size_hint_x: 1
+            on_active: root.cb_enable()
+        Label:
+            valign: 'middle'
+            id: message
+            size_hint_x: 4
+            text_size: self.width, self.height
+            text: ''
+        #image button setup
+        Button:
+            size_hint_x: 1
+            background_normal:  './images/bg_button.png'
+            background_down:    './images/bg_button.png'
+            on_press: root.cb_info()
+            Image:
+                size: 60,60
+                source: './images/logo-kivy.png'
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+                allow_stretch: True
+
+    BoxLayout:
+        Label:
+            font_size: '20pt'
+            text: 'Angle Servo 1'
+        Label:
+            font_size: '20pt'
+            text: '{}'.format(slider1.value)
+        Label:
+            font_size: '20pt'
+            text: 'Angle Servo 2'
+        Label:
+            font_size: '20pt'
+            text: '{}'.format(slider2.value)
+
+    BoxLayout:
+        Slider:
+            id: slider1
+            step: 1
+            value: 90
+            min: 0
+            max: 180
+            disabled: True
+            on_touch_move: root.cb_update_slider1()
+        Slider:
+            id: slider2
+            step: 1
+            value: 90
+            min: 0
+            max: 180
+            disabled: True
+            on_touch_move: root.cb_update_slider2()
+
+    BoxLayout:
+        Button:
+            font_size: '16pt'
+            id: pb1_eject
+            text: 'Eject right'
+            disabled: True
+            on_press: root.cb_servo1_eject()
+        Button:
+            font_size: '16pt'
+            id: pb1_reset
+            color: orange
+            disabled: True
+            text: 'Reset'
+            on_press: root.cb_servo1_reset()
+        Button:
+            font_size: '16pt'
+            id: pb2_eject
+            text: 'Eject left'
+            disabled: True
+            on_press: root.cb_servo2_eject()
+        Button:
+            font_size: '16pt'
+            id: pb2_reset
+            color: orange
+            text: 'Reset'
+            disabled: True
+            on_press: root.cb_servo2_reset()

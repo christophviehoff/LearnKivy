@@ -1,0 +1,23 @@
+#!text
+#:kivy 1.9.0
+
+<CustomSpinner@Spinner>:
+    size_hint: None, None
+    size:(100,44)
+
+<CustomButton@Button>:
+    color: 0.8,.9,0,1
+    font_size: 32
+    size: 100, 50
+
+<CustomWidget>:
+    CustomButton:
+        text: 'Hello'
+        pos: root.x, root.top - self.height
+    CustomButton:
+        text: 'World!'
+        pos: root.right - self.width, root.y
+    CustomSpinner:
+        text: "Home"
+        pos: root.x,root.y
+        values: ["Home", "Work", "Other","Custom"]
